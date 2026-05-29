@@ -1,65 +1,91 @@
 import { Link } from 'react-router-dom';
+import { ArrowUpLeft, BookOpen } from 'lucide-react';
 import { blogPosts, getBlogRoute } from '@/lib/blog';
 
 const BlogIndexPage = () => (
-  <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.14),_transparent_36%),linear-gradient(180deg,_#f8fafc_0%,_#eff6ff_100%)] text-slate-900">
-    <section className="mx-auto max-w-5xl px-6 py-16 sm:py-20">
-      <div className="max-w-3xl space-y-5">
-        <p className="text-sm font-semibold uppercase tracking-[0.24em] text-sky-700">
-          Blog Starter
-        </p>
-        <h1 className="font-serif text-4xl leading-tight text-slate-950 sm:text-5xl">
-          Start with a blog section that is ready to grow with your SEO site
+  <main className="relative min-h-screen bg-ink text-fg-1" dir="rtl">
+    {/* Decorative background */}
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div
+        className="absolute -right-40 -top-40 h-[420px] w-[420px] rounded-full blur-3xl"
+        style={{
+          background:
+            'radial-gradient(closest-side, hsl(var(--brass) / 0.18), transparent 70%)',
+        }}
+      />
+    </div>
+
+    <header className="relative z-10 border-b border-line/60">
+      <div className="container mx-auto flex items-center justify-between px-6 py-5">
+        <Link to="/" className="btn-ghost">
+          <ArrowUpLeft className="h-4 w-4" />
+          عودة إلى Shairley
+        </Link>
+        <span className="kicker">المدوّنة</span>
+      </div>
+    </header>
+
+    <section className="relative z-10 container mx-auto max-w-5xl px-6 py-16 sm:py-20">
+      <div className="max-w-3xl">
+        <span className="kicker">مدوّنة Shairley · شيّرلي</span>
+        <h1 className="mt-5 text-balance text-4xl font-bold leading-tight tracking-tight text-fg-1 sm:text-5xl">
+          مقالات عملية حول مشاركة الملفات وإدارة مساحات العمل بأمان.
         </h1>
-        <p className="text-lg leading-8 text-slate-600">
-          This is the starter blog index. Add Markdown files under
-          `seo/content/` and the site will automatically generate the list,
-          article pages, and prerender routes.
+        <p className="mt-5 text-pretty text-lg leading-8 text-fg-3">
+          هنا ستجد شروحات وأفكاراً تساعدك على استخدام Shairley بكفاءة أكبر —
+          من تنظيم الملفات إلى دعوة الأعضاء وتفعيل الوصول السريع للضيوف.
         </p>
       </div>
 
-      <div className="mt-12 grid gap-6">
+      <div className="mt-12 grid gap-5">
         {blogPosts.length > 0 ? (
           blogPosts.map((post) => (
             <article
               key={post.slug}
-              className="rounded-3xl border border-sky-100 bg-white/90 p-6 shadow-sm shadow-sky-100/60 transition-transform duration-200 hover:-translate-y-1"
+              className="surface-elevated group p-6 transition-all hover:-translate-y-0.5 hover:border-brass/40"
             >
-              <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
+              <div className="flex flex-wrap items-center gap-3 text-xs text-fg-4">
                 {post.frontmatter.date ? <span>{post.frontmatter.date}</span> : null}
                 {post.frontmatter.tags?.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full bg-sky-50 px-3 py-1 text-sky-700"
+                    className="rounded-full border border-brass/25 bg-brass/10 px-3 py-1 text-brass-ring"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
-              <h2 className="mt-4 font-serif text-2xl text-slate-950">
-                <Link className="hover:text-sky-700" to={getBlogRoute(post.slug)}>
+              <h2 className="mt-4 font-serif text-2xl font-semibold text-fg-1">
+                <Link
+                  className="link-brass hover:text-brass-ring"
+                  to={getBlogRoute(post.slug)}
+                >
                   {post.title}
                 </Link>
               </h2>
-              <p className="mt-3 text-base leading-7 text-slate-600">
+              <p className="mt-3 text-base leading-7 text-fg-3">
                 {post.description}
               </p>
               <Link
                 to={getBlogRoute(post.slug)}
-                className="mt-5 inline-flex text-sm font-semibold text-sky-700 underline underline-offset-4"
+                className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brass-ring link-brass"
               >
-                Read article
+                اقرأ المقالة
+                <ArrowUpLeft className="h-3.5 w-3.5" />
               </Link>
             </article>
           ))
         ) : (
-          <section className="rounded-[2rem] border border-dashed border-sky-200 bg-white/80 p-8">
-            <h2 className="font-serif text-2xl text-slate-950">No articles yet</h2>
-            <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
-              Add Markdown files under `seo/content/` and article cards will
-              appear here automatically. This keeps the starter clean by default
-              while making it easy to begin publishing content for your own SEO
-              strategy.
+          <section className="surface-elevated p-8">
+            <div className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-brass/25 bg-brass/10 text-brass-ring">
+              <BookOpen className="h-5 w-5" />
+            </div>
+            <h2 className="font-serif text-2xl font-semibold text-fg-1">
+              لا توجد مقالات بعد
+            </h2>
+            <p className="mt-3 max-w-2xl text-base leading-7 text-fg-3">
+              أضف ملفات Markdown داخل <code className="rounded bg-surface-3 px-1.5 py-0.5 text-brass-ring">seo/content/</code>
+              {' '}ليتم توليد صفحات المدوّنة وروابطها تلقائياً.
             </p>
           </section>
         )}

@@ -191,11 +191,11 @@ function getSiteDomainUrl() {
 }
 
 function getSiteName() {
-  return import.meta.env.VITE_APP_TITLE?.trim() || 'FileShare';
+  return import.meta.env.VITE_APP_TITLE?.trim() || 'Shairley';
 }
 
 function getTwitterSiteHandle() {
-  return import.meta.env.VITE_TWITTER_SITE?.trim() || '@fileshare';
+  return import.meta.env.VITE_TWITTER_SITE?.trim() || '@shairley';
 }
 
 function getTwitterCreatorHandle() {

@@ -1,84 +1,63 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { AlertCircle } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { AlertCircle, ArrowRight } from 'lucide-react';
 
 export default function AuthErrorPage() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [countdown, setCountdown] = useState(3);
+  const [countdown, setCountdown] = useState(5);
   const errorMessage =
-    searchParams.get('msg') ||
-    'Sorry, your authentication information is invalid or has expired';
+    searchParams.get('msg') || 'تعذر إكمال عملية المصادقة. قد يكون الرابط منتهي الصلاحية أو غير صالح.';
 
   useEffect(() => {
-    // Countdown logic
-    const timer = setInterval(() => {
-      setCountdown(prev => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          // Redirect to home page
-          window.location.href = '/';
+    const timer = window.setInterval(() => {
+      setCountdown((current) => {
+        if (current <= 1) {
+          window.clearInterval(timer);
+          navigate('/', { replace: true });
           return 0;
         }
-        return prev - 1;
+        return current - 1;
       });
     }, 1000);
 
-    // Clean up timer
-    return () => clearInterval(timer);
-  }, []);
-
-  const handleReturnHome = () => {
-    window.location.href = '/';
-  };
+    return () => window.clearInterval(timer);
+  }, [navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50 p-6 text-center">
-      <div className="space-y-6 max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-ink p-6 text-center text-fg-1" dir="rtl">
+      <div className="w-full max-w-md rounded-3xl border border-line/70 bg-surface-1/80 p-8 shadow-2xl shadow-black/30 space-y-6">
         <div className="space-y-4">
-          {/* Error icon */}
           <div className="flex justify-center">
             <div className="relative">
-              <div className="absolute inset-0 bg-red-500/20 blur-xl rounded-full"></div>
-              <AlertCircle
-                className="relative h-12 w-12 text-red-500"
-                strokeWidth={1.5}
-              />
+              <div className="absolute inset-0 rounded-full bg-brick/20 blur-2xl" />
+              <AlertCircle className="relative h-12 w-12 text-brick-soft" strokeWidth={1.5} />
             </div>
           </div>
 
-          {/* Error title */}
-          <h1 className="text-2xl font-bold text-gray-800">
-            Authentication Error
-          </h1>
-
-          {/* Error description */}
-          <p className="text-base text-muted-foreground">{errorMessage}</p>
-
-          {/* Countdown message */}
-          <div className="pt-2">
-            <p className="text-sm text-gray-500">
-              {countdown > 0 ? (
-                <>
-                  Will automatically return to the home page in{' '}
-                  <span className="text-blue-600 font-semibold text-base">
-                    {countdown}
-                  </span>{' '}
-                  seconds
-                </>
-              ) : (
-                'Redirecting...'
-              )}
-            </p>
-          </div>
+          <h1 className="text-2xl font-bold">حدث خطأ في المصادقة</h1>
+          <p className="text-sm leading-7 text-fg-2">{errorMessage}</p>
         </div>
 
-        {/* Return to home button */}
-        <div className="flex justify-center pt-2">
-          <Button onClick={handleReturnHome} className="px-6">
-            Return to Home
-          </Button>
+        <div className="rounded-2xl border border-line/70 bg-surface-2/60 px-4 py-3 text-sm text-fg-2">
+          {countdown > 0 ? (
+            <>
+              سيتم إعادتك إلى الصفحة الرئيسية خلال{' '}
+              <span className="font-bold text-brass-ring">{countdown}</span>{' '}
+              ثوانٍ.
+            </>
+          ) : (
+            'جاري التحويل...'
+          )}
         </div>
+
+        <button
+          onClick={() => navigate('/', { replace: true })}
+          className="w-full rounded-xl bg-brass py-3 text-sm font-medium transition hover:bg-brass-hover flex items-center justify-center gap-2"
+        >
+          <ArrowRight className="w-4 h-4" />
+          العودة إلى الرئيسية
+        </button>
       </div>
     </div>
   );

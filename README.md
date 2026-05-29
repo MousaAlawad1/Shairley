@@ -1,68 +1,67 @@
-# FileShare Workspace
+# Shairley · شيّرلي
 
-مساحة عمل مشتركة لإدارة ومشاركة الملفات مع فريقك — مبنية على React + Supabase.
+منصة سحابية لمشاركة الملفات وإدارة مساحات العمل، مبنية بواجهة React حديثة مع Firebase وVercel Blob.
 
-## المميزات
+## البنية الحالية
 
-- 🔐 تسجيل دخول وإنشاء حساب (Supabase Auth)
-- 📁 رفع وتحميل الملفات (Supabase Storage)
-- 👥 مساحات عمل مشتركة مع نظام أدوار (مالك، مشرف، عضو، ضيف)
-- 🔗 دعوة أعضاء عبر رابط
-- ⚡ تحديثات فورية (Supabase Realtime)
-- 📋 سجل نشاط كامل
-- 🌙 واجهة عربية حديثة (RTL)
+- **Frontend:** React 18 + TypeScript + Vite
+- **Authentication:** Firebase Auth
+- **Database:** Cloud Firestore
+- **File Storage:** Vercel Blob
+- **Hosting & Functions:** Vercel
 
-## الإعداد
+> لا يوجد backend تقليدي مستقل داخل المشروع. المنطق الخدمي موزّع بين الواجهة وVercel Functions وFirebase.
 
-### 1. إنشاء مشروع Supabase
+## أهم الملفات التوثيقية
 
-1. اذهب إلى [supabase.com](https://supabase.com) وأنشئ مشروع جديد
-2. انسخ **Project URL** و **anon public key** من Settings > API
+- `PLATFORM_GUIDE_AR.md` — شرح البنية الحالية للمشروع، الخدمات المستخدمة، والمتغيرات المطلوبة.
+- `DEPLOYMENT_GUIDE_AR.md` — دليل النشر الكامل خطوة بخطوة من الصفر حتى التشغيل الفعلي.
 
-### 2. تشغيل الـ Migration
+## التشغيل المحلي
 
-1. افتح SQL Editor في لوحة تحكم Supabase
-2. الصق محتوى `supabase/migrations/001_init.sql`
-3. اضغط Run
-
-هذا سينشئ:
-- جميع الجداول (profiles, workspaces, workspace_members, workspace_files, audit_logs)
-- سياسات RLS للحماية
-- Storage bucket للملفات
-- Trigger لإنشاء profile تلقائياً عند التسجيل
-- تفعيل Realtime على الجداول المطلوبة
-
-### 3. إعداد متغيرات البيئة
-
+### تشغيل الواجهة فقط
 ```bash
-cp .env.example .env
+npm install
+npm run dev
 ```
 
-عدّل `.env` وأضف قيم Supabase الخاصة بك.
-
-### 4. التشغيل محلياً
-
+### تشغيل الواجهة مع Vercel Functions محليًا
 ```bash
-pnpm install
-pnpm run dev
+npx vercel dev
 ```
 
-## النشر على Vercel
+## البناء
 
-1. ارفع المشروع على GitHub
-2. اربطه بـ Vercel
-3. أضف متغيرات البيئة في Vercel:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_ANON_KEY`
-4. انشر!
+```bash
+npm run build
+```
 
-ملف `vercel.json` موجود ويتعامل مع SPA routing تلقائياً.
+## الفحص
 
-## التقنيات
+```bash
+npm run typecheck
+```
 
-- React 18 + TypeScript
-- Vite
-- Tailwind CSS + shadcn/ui
-- Supabase (Auth, Database, Storage, Realtime)
-- Framer Motion
-- React Router v6
+## أهم المجلدات
+
+- `src/` — الواجهة بالكامل
+- `api/` — Vercel Functions
+- `firebase/` — Firestore rules & indexes
+- `public/` — الأصول العامة
+
+## مسار الرفع الحالي
+
+تمت إعادة تصميم رفع الملفات ليكون أوضح وأكثر ثباتًا:
+
+1. `prepare`
+2. `token`
+3. direct `put` to Vercel Blob
+4. `finalize`
+
+وهذا يقلل مشاكل التعليق أثناء الرفع ويجعل كل مرحلة قابلة للتشخيص بشكل مستقل.
+
+## ملاحظات مهمة
+
+- لا ترفع `.env` إلى GitHub.
+- لا تضف `BLOB_READ_WRITE_TOKEN` يدويًا إذا كان Vercel يضيفه تلقائيًا عند ربط Blob Store.
+- بعد تعديل `firebase/firestore.rules` أو `firebase/firestore.indexes.json` يجب نشرها يدويًا عبر Firebase CLI.

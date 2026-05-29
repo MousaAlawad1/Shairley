@@ -11,12 +11,9 @@ function getSlugFromPathname(pathname: string) {
     .replace(/^\/+/, '');
 }
 
-function ensureMetaTag(
-  attribute: 'name' | 'property',
-  value: string,
-) {
+function ensureMetaTag(attribute: 'name' | 'property', value: string) {
   let tag = document.head.querySelector(
-    `meta[${attribute}="${value}"]`,
+    `meta[${attribute}="${value}"]`
   ) as HTMLMetaElement | null;
 
   if (!tag) {
@@ -146,15 +143,14 @@ const BlogPostPage = () => {
 
   if (!post) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50 p-6 text-center">
-        <div className="space-y-6 max-w-md">
-          <div className="space-y-4">
-            <h1 className="text-7xl font-bold text-gray-300">404</h1>
-            <h2 className="text-2xl font-bold text-gray-800">Page Not Found</h2>
-            <p className="text-base text-muted-foreground">
-              Sorry, the blog post you are looking for does not exist or has been removed.
-            </p>
-          </div>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-ink p-6 text-center" dir="rtl">
+        <div className="surface-elevated accent-top max-w-md space-y-5 p-8">
+          <h1 className="metric text-7xl text-fg-4">404</h1>
+          <h2 className="text-2xl font-bold text-fg-1">المقالة غير موجودة</h2>
+          <p className="text-base text-fg-3 leading-7">
+            عذراً، المقالة التي تبحث عنها غير متاحة حالياً أو ربما تم نقلها.
+          </p>
+          <a href="/blog/" className="btn-primary mt-4 inline-flex">عودة إلى المدوّنة</a>
         </div>
       </div>
     );

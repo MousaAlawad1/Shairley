@@ -16,11 +16,11 @@ function escapeHtmlAttr(str: string): string {
     .replace(/'/g, '&#39;');
 }
 
-process.env.VITE_APP_TITLE ??= process.env.OVERVIEW_TITLE ?? 'FileShare Workspace';
-process.env.VITE_APP_DESCRIPTION ??= process.env.OVERVIEW_DESCRIPTION ?? 'FileShare Workspace';
+process.env.VITE_APP_TITLE ??= process.env.OVERVIEW_TITLE ?? 'Shairley — شيّرلي';
+process.env.VITE_APP_DESCRIPTION ??= process.env.OVERVIEW_DESCRIPTION ?? 'شيّرلي — مساحة عمل سحابية حديثة لمشاركة الملفات والتعاون بين الفرق بأمان وسرعة.';
 process.env.VITE_APP_TITLE = escapeHtmlAttr(process.env.VITE_APP_TITLE);
 process.env.VITE_APP_DESCRIPTION = escapeHtmlAttr(process.env.VITE_APP_DESCRIPTION);
-process.env.VITE_APP_LOGO_URL ??= process.env.OVERVIEW_LOGO_URL ?? '/favicon.ico';
+process.env.VITE_APP_LOGO_URL ??= process.env.OVERVIEW_LOGO_URL ?? '/favicon.svg';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
@@ -33,7 +33,7 @@ export default defineConfig(({ command }) => {
         hostname: 'https://fileshare.app',
         lastmod: getSitemapLastmod(),
         readable: true,
-        generateRobotsTxt: true,
+        generateRobotsTxt: false,
       }),
       ...(blogPrerenderRoutes.length > 0
         ? vitePrerenderPlugin({
@@ -51,12 +51,6 @@ export default defineConfig(({ command }) => {
     server: {
       host: '0.0.0.0', // Listen on all network interfaces.
       port: parseInt(process.env.VITE_PORT || '3000'),
-      proxy: {
-        '/api': {
-          target: `http://localhost:8000`,
-          changeOrigin: true,
-        },
-      },
       watch: { usePolling: true, interval: 600 },
     },
     build: {
@@ -97,14 +91,12 @@ export default defineConfig(({ command }) => {
             ],
             'form-vendor': ['react-hook-form', '@hookform/resolvers', 'zod'],
             'utils-vendor': [
-              'axios',
               'clsx',
               'tailwind-merge',
               'class-variance-authority',
               'date-fns',
               'lucide-react',
             ],
-            'query-vendor': ['@tanstack/react-query'],
           },
         },
       },

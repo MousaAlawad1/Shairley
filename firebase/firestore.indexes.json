@@ -1,0 +1,29 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "file_versions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "file_id", "order": "ASCENDING" },
+        { "fieldPath": "version_number", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "file_comments",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "file_id", "order": "ASCENDING" },
+        { "fieldPath": "created_at", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": [
+    {
+      "collectionGroup": "members",
+      "fieldPath": "user_id",
+      "indexes": [
+        { "order": "ASCENDING", "queryScope": "COLLECTION_GROUP" }
+      ]
+    }
+  ]
+}

@@ -1,24 +1,22 @@
 import type { Config } from 'tailwindcss';
 import tailwindcssAnimate from 'tailwindcss-animate';
-import tailwindcssAspectRatio from '@tailwindcss/aspect-ratio';
-import tailwindcssTypography from '@tailwindcss/typography';
+import typography from '@tailwindcss/typography';
 
+/**
+ * Shairley — شيّرلي
+ * Design system: "Enterprise Dark" — Clean, minimal, professional
+ *
+ * Inspired by Apple, Samsung, Oracle enterprise dashboards.
+ * Single accent color (deep indigo-blue), minimal shadows, tight spacing.
+ */
 export default {
   darkMode: ['class'],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
-  prefix: '',
+  content: ['./src/**/*.{ts,tsx}', './index.html'],
   theme: {
     container: {
       center: true,
-      padding: '2rem',
-      screens: {
-        '2xl': '1400px',
-      },
+      padding: '1.5rem',
+      screens: { '2xl': '1280px' },
     },
     extend: {
       colors: {
@@ -35,36 +33,84 @@ export default {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
         },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
         },
         muted: {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
         },
-        accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
         },
         popover: {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))',
         },
-        card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
         },
-        sidebar: {
-          DEFAULT: 'hsl(var(--sidebar-background))',
-          foreground: 'hsl(var(--sidebar-foreground))',
-          primary: 'hsl(var(--sidebar-primary))',
-          'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-          accent: 'hsl(var(--sidebar-accent))',
-          'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-          border: 'hsl(var(--sidebar-border))',
-          ring: 'hsl(var(--sidebar-ring))',
+
+        ink: 'hsl(var(--ink))',
+        sheen: 'hsl(var(--sheen))',
+
+        'brand-bg': 'hsl(var(--brand-bg))',
+        'brand-card': 'hsl(var(--brand-card))',
+        'brand-accent': {
+          DEFAULT: 'hsl(var(--brand-accent))',
+          hover: 'hsl(var(--brand-accent-hover))',
+          ring: 'hsl(var(--brand-accent-ring))',
+          muted: 'hsl(var(--brand-accent-muted))',
         },
+
+        'surface-1': 'hsl(var(--surface-1))',
+        'surface-2': 'hsl(var(--surface-2))',
+        'surface-3': 'hsl(var(--surface-3))',
+        'surface-4': 'hsl(var(--surface-4))',
+
+        line: 'hsl(var(--line))',
+        'line-strong': 'hsl(var(--line-strong))',
+
+        'fg-1': 'hsl(var(--fg-1))',
+        'fg-2': 'hsl(var(--fg-2))',
+        'fg-3': 'hsl(var(--fg-3))',
+        'fg-4': 'hsl(var(--fg-4))',
+
+        brass: {
+          DEFAULT: 'hsl(var(--brass))',
+          hover: 'hsl(var(--brass-hover))',
+          ring: 'hsl(var(--brass-ring))',
+        },
+        brick: {
+          DEFAULT: 'hsl(var(--brick))',
+          soft: 'hsl(var(--brick-soft))',
+        },
+        sage: 'hsl(var(--sage))',
+      },
+      fontFamily: {
+        sans: [
+          '"Noto Kufi Arabic"',
+          'Inter',
+          'system-ui',
+          '-apple-system',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica Neue',
+          'Arial',
+          'sans-serif',
+        ],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+      },
+      boxShadow: {
+        'depth-1': '0 1px 2px rgba(0,0,0,0.3)',
+        'depth-2': '0 2px 8px rgba(0,0,0,0.25)',
+        'depth-3': '0 8px 24px rgba(0,0,0,0.35)',
+        glow: 'none',
+        'glow-sm': 'none',
+        brass: 'none',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -72,28 +118,20 @@ export default {
         sm: 'calc(var(--radius) - 4px)',
       },
       keyframes: {
-        'accordion-down': {
-          from: {
-            height: '0',
-          },
-          to: {
-            height: 'var(--radix-accordion-content-height)',
-          },
+        'fade-in': {
+          '0%': { opacity: '0', transform: 'translateY(4px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        'accordion-up': {
-          from: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-          to: {
-            height: '0',
-          },
+        shimmer: {
+          '0%': { backgroundPosition: '200% 0' },
+          '100%': { backgroundPosition: '-200% 0' },
         },
       },
       animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
+        'fade-in': 'fade-in 0.3s ease-out both',
+        shimmer: 'shimmer 2s linear infinite',
       },
     },
   },
-  plugins: [tailwindcssAnimate, tailwindcssAspectRatio, tailwindcssTypography],
+  plugins: [tailwindcssAnimate, typography],
 } satisfies Config;

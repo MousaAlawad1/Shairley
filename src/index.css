@@ -1,83 +1,489 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ---------------------------------------------------------------------------
+   Shairley — شيّرلي
+   Design system: "Enterprise Dark" — Inspired by Apple/Samsung/Oracle
+   
+   Palette:
+   - Base: #09090b (near-black)
+   - Surfaces: #111113, #18181b, #1f1f23
+   - Accent: #3b5bdb (deep indigo-blue)
+   - Text: #fafafa, #a1a1aa, #71717a
+   - Borders: #27272a
+--------------------------------------------------------------------------- */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.75rem;
+    /* Brand tokens */
+    --brand-bg: 240 6% 4%;
+    --brand-card: 240 4% 8%;
+    --brand-accent: 221 83% 60%;
+    --brand-accent-hover: 221 83% 66%;
+    --brand-accent-ring: 221 90% 74%;
+    --brand-accent-muted: 221 35% 42%;
+
+    /* Canvas */
+    --ink: 240 6% 4%;
+    --sheen: 0 0% 98%;
+
+    /* Surfaces */
+    --surface-1: 240 6% 4%;
+    --surface-2: 240 4% 8%;
+    --surface-3: 240 5% 11%;
+    --surface-4: 240 5% 15%;
+
+    /* Lines */
+    --line: 240 4% 16%;
+    --line-strong: 240 4% 20%;
+
+    /* Foreground */
+    --fg-1: 0 0% 98%;
+    --fg-2: 240 4% 70%;
+    --fg-3: 240 4% 54%;
+    --fg-4: 240 4% 40%;
+
+    /* Accents */
+    --brass: var(--brand-accent);
+    --brass-hover: var(--brand-accent-hover);
+    --brass-ring: var(--brand-accent-ring);
+
+    --brick: 0 72% 51%;
+    --brick-soft: 0 60% 68%;
+
+    --sage: 142 40% 50%;
+
+    /* shadcn baseline */
+    --background: var(--ink);
+    --foreground: var(--fg-1);
+    --card: var(--surface-2);
+    --card-foreground: var(--fg-1);
+    --popover: var(--surface-3);
+    --popover-foreground: var(--fg-1);
+    --primary: var(--brand-accent);
+    --primary-foreground: 0 0% 100%;
+    --secondary: var(--surface-3);
+    --secondary-foreground: var(--fg-1);
+    --muted: var(--surface-2);
+    --muted-foreground: var(--fg-3);
+    --accent: var(--surface-3);
+    --accent-foreground: var(--fg-1);
+    --destructive: var(--brick);
+    --destructive-foreground: 0 0% 100%;
+    --border: var(--line);
+    --input: var(--line-strong);
+    --ring: var(--brand-accent-ring);
+    --radius: 0.5rem;
   }
 
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
-  }
-}
-
-@layer base {
   * {
     @apply border-border;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html, body, #root { height: 100%; }
+
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', 'Segoe UI', sans-serif;
+    @apply bg-ink text-fg-1 font-sans;
+    background:
+      radial-gradient(circle at top right, hsl(var(--brand-accent) / 0.08), transparent 28%),
+      radial-gradient(circle at bottom left, hsl(var(--sage) / 0.06), transparent 24%),
+      hsl(var(--ink));
+    font-feature-settings: 'cv02','cv03','cv04','ss01';
+    text-rendering: optimizeLegibility;
   }
+
+  ::selection { background: hsl(var(--brand-accent) / 0.25); color: hsl(var(--fg-1)); }
+
+  /* Scrollbars */
+  *::-webkit-scrollbar { width: 6px; height: 6px; }
+  *::-webkit-scrollbar-track { background: transparent; }
+  *::-webkit-scrollbar-thumb {
+    background: hsl(var(--line-strong));
+    border-radius: 999px;
+  }
+  *::-webkit-scrollbar-thumb:hover { background: hsl(var(--fg-4)); }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.3);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.5);
+/* ---------------------------------------------------------------------------
+   Components
+--------------------------------------------------------------------------- */
+@layer components {
+
+  /* ═══ OWNER BADGE — Cold-rolled silver ingot ═══
+     Strict, formal, industrial. Like a hallmarked silver bar:
+     - Flat, near-square corners (not a pill — not a bubble)
+     - Brushed horizontal gradient: bright streak at top, dark base
+     - Hard engraved border in dark steel
+     - Thin bright line at top edge = rolled-metal light catch
+     - Thin shadow line at bottom = underside of the bar
+     - Text engraved into the surface (slight dark text-shadow)
+     Zero softness. Zero 3D. Pure cold metal. */
+
+  .owner-badge {
+    background: linear-gradient(
+      180deg,
+      #dde3ea 0%,      /* top edge: bright light catch              */
+      #c2cad4 6%,      /* upper surface: polished bright silver      */
+      #9ba5b2 32%,     /* mid-body: the bulk of the bar              */
+      #8a94a3 58%,     /* lower mid: weight, depth                   */
+      #707a89 80%,     /* shadow slope                               */
+      #5c6472 100%     /* underside edge: darkest                    */
+    );
+    color: #111318;
+    /* Hard steel border — no glow, no softness */
+    border: 1.5px solid #2e3340;
+    border-top-color: #4a5262;
+    border-bottom-color: #1a1e27;
+    /* Lit top edge + shadow bottom — stamped ingot feel */
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.45),
+      inset 0 -1px 0 rgba(0,0,0,0.30),
+      0 1px 2px rgba(0,0,0,0.40);
+    /* Slightly engraved text */
+    text-shadow: 0 1px 0 rgba(255,255,255,0.20), 0 -1px 0 rgba(0,0,0,0.15);
+    letter-spacing: 0.10em;
+    font-weight: 800;
+  }
+
+  .owner-badge-pulse {
+    background: linear-gradient(
+      180deg,
+      #dde3ea 0%,
+      #c2cad4 6%,
+      #9ba5b2 32%,
+      #8a94a3 58%,
+      #707a89 80%,
+      #5c6472 100%
+    );
+    color: #111318;
+    border: 1.5px solid #2e3340;
+    border-top-color: #4a5262;
+    border-bottom-color: #1a1e27;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.45),
+      inset 0 -1px 0 rgba(0,0,0,0.30),
+      0 1px 2px rgba(0,0,0,0.40);
+  }
+
+
+  /* ═══ NAVBAR FROSTED BLUR ═══
+     A stronger frosted-glass effect for the top navbar and the
+     mobile side panel. Uses generous blur + saturation for a
+     premium feel, with a graceful fallback for browsers without
+     backdrop-filter support. */
+  .navbar-blur {
+    background: hsl(var(--surface-1) / 0.45);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    position: relative;
+    isolation: isolate;
+    /* No overflow: hidden — would clip popovers / dropdowns / notifications.
+       The rounded shape comes from border-radius on the element itself. */
+  }
+  /* Top-edge highlight — gives the pill a glassy lit edge.
+     border-radius: inherit keeps it within the rounded shape. */
+  .navbar-blur::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    /* Only render a 1px top line via border-image-like gradient */
+    background:
+      linear-gradient(
+        90deg,
+        transparent 0%,
+        hsl(0 0% 100% / 0.10) 50%,
+        transparent 100%
+      ) top / 100% 1px no-repeat;
+  }
+  /* Soft inner top gradient for depth */
+  .navbar-blur::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: -1;
+    background: linear-gradient(
+      180deg,
+      hsl(0 0% 100% / 0.04) 0%,
+      hsl(var(--surface-1) / 0) 60%
+    );
+  }
+
+  /* Fallback: no backdrop-filter (older / Firefox without flag) */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .navbar-blur {
+      background: hsl(var(--surface-1) / 0.96);
+    }
+  }
+
+
+  /* ═══ SURFACE SYSTEM ═══ */
+  .glass {
+    background: linear-gradient(180deg, hsl(var(--surface-2) / 0.96), hsl(var(--surface-2) / 0.88));
+    border: 1px solid hsl(var(--line));
+    @apply rounded-xl;
+  }
+
+  .glass-elevated {
+    background: linear-gradient(180deg, hsl(var(--surface-2)), hsl(var(--surface-3) / 0.9));
+    border: 1px solid hsl(var(--line));
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    @apply rounded-2xl;
+  }
+
+  .glass-floating {
+    background: linear-gradient(180deg, hsl(var(--surface-3) / 0.96), hsl(var(--surface-2) / 0.94));
+    border: 1px solid hsl(var(--line-strong));
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.24);
+    @apply rounded-3xl;
+  }
+
+  .glass-subtle {
+    background: hsl(var(--surface-2) / 0.6);
+    border: 1px solid hsl(var(--line));
+    @apply rounded-lg;
+  }
+
+  .glass-card {
+    background: hsl(var(--surface-2));
+    border: 1px solid hsl(var(--line));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    @apply rounded-lg;
+  }
+
+  .glass-input {
+    background: hsl(var(--surface-1));
+    border: 1px solid hsl(var(--line));
+    @apply rounded-md px-3.5 py-2.5 text-sm text-fg-1 placeholder:text-fg-4
+           transition-colors duration-200
+           focus:outline-none focus:border-[hsl(var(--brand-accent))]
+           focus:ring-1 focus:ring-[hsl(var(--brand-accent)/0.3)];
+  }
+
+  /* Legacy compat */
+  .surface-elevated { @apply glass-elevated; }
+  .surface-floating { @apply glass-floating; }
+
+  .glass-header {
+    background: hsl(var(--surface-1) / 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    @apply border-b border-[hsl(var(--line))];
+  }
+
+  /* Glow card — very subtle */
+  .glow-card { @apply relative; }
+  .glow-card::before { display: none; }
+
+  /* Accent top — thin line */
+  .accent-top::after {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: hsl(var(--brand-accent) / 0.4);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  /* Mesh gradient — disabled for enterprise */
+  .mesh-gradient { position: relative; }
+  .mesh-gradient::before { display: none; }
+
+  /* ═══ BUTTONS ═══ */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium
+           text-white transition-colors duration-150
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--brand-accent-ring)/0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--ink))]
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    background: linear-gradient(135deg, hsl(var(--brand-accent)), hsl(var(--brand-accent-hover)));
+    box-shadow: 0 10px 24px hsl(var(--brand-accent) / 0.18);
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, hsl(var(--brand-accent-hover)), hsl(var(--brand-accent)));
+  }
+  .btn-primary:active:not(:disabled) { transform: scale(0.98); }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md
+           px-4 py-2.5 text-sm font-medium text-fg-1 transition-colors duration-150
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--brand-accent-ring)/0.3)]
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    background: hsl(var(--surface-3) / 0.88);
+    border: 1px solid hsl(var(--line-strong));
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background: hsl(var(--surface-4));
+    border-color: hsl(var(--fg-4));
+  }
+  .btn-secondary:active:not(:disabled) { transform: scale(0.98); }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-fg-2
+           transition-colors duration-150 hover:text-fg-1 hover:bg-[hsl(var(--surface-3))]
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--brand-accent-ring)/0.3)];
+  }
+  .btn-ghost:active { transform: scale(0.98); }
+
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-[hsl(var(--brick))] px-4 py-2.5 text-sm font-medium
+           text-white transition-colors duration-150 hover:bg-[hsl(var(--brick)/0.85)]
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(var(--brick)/0.4)]
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-danger:active { transform: scale(0.98); }
+
+  /* Landing helpers */
+  .primary-button { @apply btn-primary px-6 py-3; }
+  .glass-button { @apply btn-secondary px-6 py-3; }
+
+  /* Workspace card */
+  .surface { @apply glass-subtle transition-colors duration-150; }
+  .card-3d {
+    @apply glass-elevated transition-all duration-200;
+  }
+  .card-3d:hover {
+    border-color: hsl(var(--line-strong));
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.22);
+  }
+
+  /* Typography */
+  .kicker {
+    @apply inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.12em] text-fg-3;
+  }
+  .kicker::before {
+    content: '';
+    width: 16px; height: 1px;
+    background: hsl(var(--fg-4));
+  }
+
+  .metric {
+    @apply text-3xl font-semibold tracking-tight text-fg-1;
+    font-feature-settings: 'tnum','lnum';
+  }
+
+  /* Inputs */
+  .field { @apply glass-input w-full; }
+
+  /* Line clamps */
+  .line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+  .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  /* Skeleton */
+  .skeleton-shimmer {
+    @apply rounded-md;
+    background: linear-gradient(
+      90deg,
+      hsl(var(--surface-2)) 0%,
+      hsl(var(--surface-3)) 40%,
+      hsl(var(--surface-4)) 50%,
+      hsl(var(--surface-3)) 60%,
+      hsl(var(--surface-2)) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
+
+  /* Navbar */
+  .navbar-floating {
+    @apply fixed top-4 left-1/2 -translate-x-1/2 z-50;
+    background: hsl(var(--surface-2) / 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--line));
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    @apply rounded-lg;
+    will-change: transform, opacity;
+    transform: translateX(-50%) translateZ(0);
+    transition: transform 0.3s ease, opacity 0.2s ease;
+  }
+  .navbar-floating.navbar-hidden {
+    transform: translateX(-50%) translateY(-120%) translateZ(0);
+    opacity: 0;
+  }
+
+  .nav-indicator {
+    @apply absolute rounded-md;
+    background: hsl(var(--brand-accent) / 0.1);
+    border: 1px solid hsl(var(--brand-accent) / 0.2);
+    transition: all 0.3s ease;
+    will-change: left, width;
+  }
+
+  .focus-ring { @apply focus-visible:outline-none; }
+  .focus-ring:focus-visible {
+    box-shadow: 0 0 0 2px hsl(var(--ink)), 0 0 0 4px hsl(var(--brand-accent-ring) / 0.5);
+  }
+
+  /* Grid pattern — disabled */
+  .grid-pattern { position: relative; }
+  .grid-pattern::after { display: none; }
+
+  /* Orbs — disabled for enterprise */
+  .orb { display: none; }
+  .orb-1, .orb-2, .orb-3 { display: none; }
 }
 
-/* Line clamp utility */
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/* ---------------------------------------------------------------------------
+   Animations (minimal)
+--------------------------------------------------------------------------- */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ---------------------------------------------------------------------------
+   Utilities
+--------------------------------------------------------------------------- */
+@layer utilities {
+  .ease-smooth { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
+
+  .animate-shimmer { animation: shimmer 1.5s ease-in-out infinite; }
+  .animate-fade-in-up { animation: fade-in-up 0.4s ease both; }
+  .animate-scale-in { animation: scale-in 0.25s ease both; }
+  .animate-float { animation: none; }
+
+  /* Stagger delays */
+  .delay-75 { animation-delay: 75ms; }
+  .delay-150 { animation-delay: 150ms; }
+  .delay-225 { animation-delay: 225ms; }
+  .delay-300 { animation-delay: 300ms; }
+
+  .link-brass {
+    @apply text-fg-2 hover:text-fg-1 transition-colors duration-150;
+  }
+
+  /* Gradient text — subtle for enterprise */
+  .gradient-text {
+    @apply text-[hsl(var(--brand-accent-ring))];
+  }
+
+  /* Shadow utilities */
+  .shadow-glow-sm { box-shadow: none; }
+  .shadow-glow { box-shadow: none; }
+  .shadow-glow-lg { box-shadow: none; }
 }
